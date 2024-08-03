@@ -1,0 +1,87 @@
+[gd_scene load_steps=8 format=3 uid="uid://b1f8auda1g6ok"]
+
+[ext_resource type="Script" path="res://scripts/scenes/ending.gd" id="1_3m1mt"]
+[ext_resource type="FontFile" uid="uid://bpxfgrvg1gwqc" path="res://fonts/mytype.ttf" id="1_g8vqc"]
+[ext_resource type="Theme" uid="uid://bvv6uqa6spydd" path="res://themes/default.tres" id="2_abtef"]
+[ext_resource type="AudioStream" uid="uid://ilf2k8yd6mx1" path="res://sounds/sadMusic.mp3" id="4_nwu8j"]
+[ext_resource type="AudioStream" uid="uid://d0nlp614lnh2g" path="res://sounds/goodMusic.mp3" id="4_vy47i"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_x6iub"]
+font = ExtResource("1_g8vqc")
+font_size = 64
+outline_size = 5
+
+[sub_resource type="LabelSettings" id="LabelSettings_4kaux"]
+font = ExtResource("1_g8vqc")
+font_size = 32
+
+[node name="Ending" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_3m1mt")
+metadata/_edit_use_anchors_ = true
+
+[node name="TitleLabel" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.359375
+anchor_top = 0.184722
+anchor_right = 0.640625
+anchor_bottom = 0.301389
+offset_left = 47.5
+offset_top = 4.99988
+offset_right = -47.5
+offset_bottom = -4.99989
+grow_horizontal = 2
+grow_vertical = 2
+text = "Congrats!!"
+label_settings = SubResource("LabelSettings_x6iub")
+horizontal_alignment = 1
+vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="EndingLabel" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.257813
+anchor_top = 0.304167
+anchor_right = 0.742188
+anchor_bottom = 0.3625
+grow_horizontal = 2
+grow_vertical = 2
+text = "Ending 0/0 - \"Cool ending name!!!\""
+label_settings = SubResource("LabelSettings_4kaux")
+horizontal_alignment = 1
+vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="MenuButton" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.39375
+anchor_top = 0.836111
+anchor_right = 0.60625
+anchor_bottom = 0.902778
+offset_left = 14.5
+offset_top = 6.0
+offset_right = -14.5
+grow_horizontal = 2
+grow_vertical = 0
+theme = ExtResource("2_abtef")
+theme_override_font_sizes/font_size = 36
+text = "Back to Menu"
+metadata/_edit_use_anchors_ = true
+
+[node name="Sounds" type="Node" parent="."]
+
+[node name="GoodMusic" type="AudioStreamPlayer" parent="Sounds"]
+stream = ExtResource("4_vy47i")
+
+[node name="SadMusic" type="AudioStreamPlayer" parent="Sounds"]
+stream = ExtResource("4_nwu8j")
+
+[connection signal="pressed" from="MenuButton" to="." method="_on_menu_button_pressed"]

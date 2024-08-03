@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3 uid="uid://c72l811moug1m"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_du5ui"]
+size = Vector3(32, 32, 1)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ne18g"]
+size = Vector2(32, 32)
+
+[node name="Exit" type="MeshInstance2D"]
+modulate = Color(1, 0.890196, 0.337255, 1)
+mesh = SubResource("BoxMesh_du5ui")
+
+[node name="Area" type="Area2D" parent="."]
+
+[node name="Collision" type="CollisionShape2D" parent="Area"]
+shape = SubResource("RectangleShape2D_ne18g")

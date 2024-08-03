@@ -1,0 +1,470 @@
+[gd_scene load_steps=27 format=3 uid="uid://ubw72kyiqi8m"]
+
+[ext_resource type="Texture2D" uid="uid://dhvyiirnmlis0" path="res://textures/materials/wood/wood_floor_ao_1k.png" id="1_b1n8a"]
+[ext_resource type="Script" path="res://scripts/scenes/game.gd" id="1_ockha"]
+[ext_resource type="Texture2D" uid="uid://clv0s8vb0vomp" path="res://textures/materials/wood/wood_floor_nor_gl_1k.png" id="2_t68k0"]
+[ext_resource type="PackedScene" uid="uid://bokmp36mxd742" path="res://models/Tischlampe.fbx" id="2_u4u4x"]
+[ext_resource type="Texture2D" uid="uid://cgh54ubvq1dj5" path="res://textures/materials/wood/wood_floor_rough_1k.png" id="3_vaawy"]
+[ext_resource type="Texture2D" uid="uid://lun1fpjm3shv" path="res://textures/application.png" id="4_cn8cy"]
+[ext_resource type="FontFile" uid="uid://bpxfgrvg1gwqc" path="res://fonts/mytype.ttf" id="6_lrnsc"]
+[ext_resource type="PackedScene" uid="uid://b83c6wluv5uhc" path="res://models/pencil/Pencil.fbx" id="7_qp3ql"]
+[ext_resource type="AudioStream" uid="uid://d2lk26rq0uv2b" path="res://sounds/writing.mp3" id="7_rt5he"]
+[ext_resource type="Theme" uid="uid://bvv6uqa6spydd" path="res://themes/default.tres" id="7_xggvu"]
+[ext_resource type="AudioStream" uid="uid://doqknjluwocjx" path="res://sounds/crying.mp3" id="8_wibq8"]
+
+[sub_resource type="Environment" id="Environment_efbui"]
+background_mode = 1
+fog_light_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_wfdf5"]
+albedo_color = Color(0.172549, 0.0784314, 0.0196078, 1)
+roughness_texture = ExtResource("3_vaawy")
+normal_enabled = true
+normal_texture = ExtResource("2_t68k0")
+ao_enabled = true
+ao_texture = ExtResource("1_b1n8a")
+uv1_scale = Vector3(5, 5, 5)
+
+[sub_resource type="BoxMesh" id="BoxMesh_k84co"]
+material = SubResource("StandardMaterial3D_wfdf5")
+size = Vector3(5.5, 0.15, 4)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_amsln"]
+albedo_texture = ExtResource("4_cn8cy")
+uv1_scale = Vector3(2.45, 2, 2.45)
+uv1_offset = Vector3(0.275, 0, 0)
+
+[sub_resource type="BoxMesh" id="BoxMesh_ac4r3"]
+material = SubResource("StandardMaterial3D_amsln")
+size = Vector3(0.8, 0, 1)
+
+[sub_resource type="Animation" id="Animation_o78uh"]
+resource_name = "RESET"
+length = 0.01
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Pencil:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0.5, 0.1, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Pencil:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 1.309, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_xuowm"]
+resource_name = "Write"
+length = 0.25
+loop_mode = 2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Pencil:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.25),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(0.3, 0.32, 0), Vector3(0.15, 0.32, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Pencil:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.25),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(0.174533, 1.309, 1.5708), Vector3(0, 1.309, 1.74533)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_n612a"]
+_data = {
+"RESET": SubResource("Animation_o78uh"),
+"Write": SubResource("Animation_xuowm")
+}
+
+[sub_resource type="LabelSettings" id="LabelSettings_25qxk"]
+font = ExtResource("6_lrnsc")
+font_size = 48
+outline_size = 5
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_k7opf"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_rrtyp"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_uj7ta"]
+font = ExtResource("6_lrnsc")
+font_size = 46
+outline_size = 5
+
+[sub_resource type="LabelSettings" id="LabelSettings_4bccu"]
+line_spacing = 0.0
+font = ExtResource("6_lrnsc")
+font_size = 32
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_trsj4"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_wku10"]
+font = ExtResource("6_lrnsc")
+font_size = 18
+outline_size = 3
+
+[node name="Game" type="Node3D"]
+script = ExtResource("1_ockha")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_efbui")
+
+[node name="Map" type="Node3D" parent="."]
+
+[node name="Table" type="MeshInstance3D" parent="Map"]
+mesh = SubResource("BoxMesh_k84co")
+skeleton = NodePath("../..")
+
+[node name="Paper" type="MeshInstance3D" parent="Map"]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0.078, 0)
+mesh = SubResource("BoxMesh_ac4r3")
+skeleton = NodePath("../..")
+
+[node name="Lamp" parent="Map" instance=ExtResource("2_u4u4x")]
+transform = Transform3D(1.73205, 0, -1, 0, 2, 0, 1, 0, 1.73205, -0.6, 0.08, -0.08)
+
+[node name="Pencil" parent="Map" instance=ExtResource("7_qp3ql")]
+transform = Transform3D(1.29408, 0, 4.82964, 0, 5, 0, -4.82964, 0, 1.29408, 0.5, 0.1, 0)
+
+[node name="PencilAnim" type="AnimationPlayer" parent="Map"]
+libraries = {
+"": SubResource("AnimationLibrary_n612a")
+}
+
+[node name="Lights" type="Node3D" parent="."]
+
+[node name="LampLight" type="SpotLight3D" parent="Lights"]
+transform = Transform3D(0.984808, 6.64072e-10, -0.173648, 0.173648, -7.59041e-09, 0.984808, -6.64077e-10, -1, -7.59041e-09, -0.4, 0.7, 0)
+spot_angle = 60.0
+spot_angle_attenuation = 3.0
+
+[node name="CameraPoses" type="Node3D" parent="."]
+
+[node name="CamGamePos" type="Node3D" parent="CameraPoses"]
+transform = Transform3D(1, 0, 0, 0, 0.422618, 0.906308, 0, -0.906308, 0.422618, 0, 0.8, 0.45)
+
+[node name="CamMenuPos" type="Node3D" parent="CameraPoses"]
+transform = Transform3D(0.707107, -0.253404, 0.660141, 0, 0.93358, 0.358368, -0.707107, -0.253404, 0.660141, 0, 1.15, 1.45)
+
+[node name="Camera" type="Camera3D" parent="."]
+transform = Transform3D(0.707107, -0.253404, 0.660141, 0, 0.93358, 0.358368, -0.707107, -0.253404, 0.660141, 0, 1.15, 1.45)
+
+[node name="Sounds" type="Node" parent="."]
+
+[node name="Writing" type="AudioStreamPlayer" parent="Sounds"]
+stream = ExtResource("7_rt5he")
+volume_db = 15.0
+
+[node name="Crying" type="AudioStreamPlayer" parent="Sounds"]
+stream = ExtResource("8_wibq8")
+volume_db = 10.0
+
+[node name="GameHUD" type="Control" parent="."]
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="WhichLabel" type="Label" parent="GameHUD"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.172656
+anchor_top = 0.0277778
+anchor_right = 0.827344
+anchor_bottom = 0.1125
+grow_horizontal = 2
+text = "Which choice should you make?"
+label_settings = SubResource("LabelSettings_25qxk")
+horizontal_alignment = 1
+vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="Choice1" type="Button" parent="GameHUD"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.09375
+anchor_top = 0.763889
+anchor_right = 0.25
+anchor_bottom = 0.902778
+grow_vertical = 0
+theme = ExtResource("7_xggvu")
+text = "Complete"
+metadata/_edit_use_anchors_ = true
+
+[node name="Choice2" type="Button" parent="GameHUD"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.75
+anchor_top = 0.763889
+anchor_right = 0.90625
+anchor_bottom = 0.902778
+grow_horizontal = 0
+grow_vertical = 0
+theme = ExtResource("7_xggvu")
+text = "Cry"
+metadata/_edit_use_anchors_ = true
+
+[node name="MenuHUD" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="MainPanel" type="Panel" parent="MenuHUD"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_k7opf")
+metadata/_edit_use_anchors_ = true
+
+[node name="TitleLabel" type="Label" parent="MenuHUD/MainPanel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.213281
+anchor_top = 0.0694444
+anchor_right = 0.786719
+anchor_bottom = 0.156944
+grow_horizontal = 2
+text = "Job Application Simulator"
+label_settings = SubResource("LabelSettings_25qxk")
+horizontal_alignment = 1
+vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="StartButton" type="Button" parent="MenuHUD/MainPanel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.421484
+anchor_top = 0.3875
+anchor_right = 0.578516
+anchor_bottom = 0.445833
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("7_xggvu")
+text = "Start Game"
+metadata/_edit_use_anchors_ = true
+
+[node name="EndingsButton" type="Button" parent="MenuHUD/MainPanel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.421484
+anchor_top = 0.456944
+anchor_right = 0.578516
+anchor_bottom = 0.515278
+offset_bottom = -3.05176e-05
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("7_xggvu")
+text = "Endings"
+metadata/_edit_use_anchors_ = true
+
+[node name="CreditsButton" type="Button" parent="MenuHUD/MainPanel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.421484
+anchor_top = 0.526389
+anchor_right = 0.578516
+anchor_bottom = 0.584722
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("7_xggvu")
+text = "Credits"
+metadata/_edit_use_anchors_ = true
+
+[node name="ExitButton" type="Button" parent="MenuHUD/MainPanel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.421484
+anchor_top = 0.595833
+anchor_right = 0.578516
+anchor_bottom = 0.654167
+offset_top = -3.05176e-05
+offset_bottom = 3.05176e-05
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("7_xggvu")
+text = "Exit Game"
+metadata/_edit_use_anchors_ = true
+
+[node name="SecretButton" type="Button" parent="MenuHUD/MainPanel"]
+layout_mode = 0
+anchor_left = 0.09375
+anchor_top = 0.416667
+anchor_right = 0.135937
+anchor_bottom = 0.475
+theme = ExtResource("7_xggvu")
+theme_override_colors/font_color = Color(0, 0, 0, 0)
+theme_override_colors/font_pressed_color = Color(0.65098, 0.65098, 0.65098, 1)
+theme_override_colors/font_hover_color = Color(1, 1, 1, 1)
+theme_override_colors/font_focus_color = Color(0, 0, 0, 0)
+theme_override_colors/font_hover_pressed_color = Color(0, 0, 0, 0)
+theme_override_colors/font_disabled_color = Color(0, 0, 0, 0)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 0)
+text = "???"
+metadata/_edit_use_anchors_ = true
+
+[node name="EndingsPanel" type="Panel" parent="MenuHUD"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_rrtyp")
+metadata/_edit_use_anchors_ = true
+
+[node name="TitleLabel" type="Label" parent="MenuHUD/EndingsPanel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.410156
+anchor_top = 0.0277778
+anchor_right = 0.589844
+anchor_bottom = 0.1125
+grow_horizontal = 2
+text = "Endings"
+label_settings = SubResource("LabelSettings_uj7ta")
+horizontal_alignment = 1
+vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="EndingsLabel" type="Label" parent="MenuHUD/EndingsPanel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.339453
+anchor_top = 0.441667
+anchor_right = 0.660547
+anchor_bottom = 0.558333
+grow_horizontal = 2
+grow_vertical = 2
+text = "\"Cool Ending\" - Yes
+\"Awesome Ending\" - No"
+label_settings = SubResource("LabelSettings_4bccu")
+metadata/_edit_use_anchors_ = true
+
+[node name="Back" type="Button" parent="MenuHUD/EndingsPanel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.468359
+anchor_top = 0.913889
+anchor_right = 0.531641
+anchor_bottom = 0.972222
+grow_horizontal = 2
+grow_vertical = 0
+theme = ExtResource("7_xggvu")
+text = "Back"
+metadata/_edit_use_anchors_ = true
+
+[node name="CreditsPanel" type="Panel" parent="MenuHUD"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_trsj4")
+metadata/_edit_use_anchors_ = true
+
+[node name="TitleLabel" type="Label" parent="MenuHUD/CreditsPanel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.410156
+anchor_top = 0.0277778
+anchor_right = 0.589844
+anchor_bottom = 0.1125
+grow_horizontal = 2
+text = "Credits"
+label_settings = SubResource("LabelSettings_uj7ta")
+horizontal_alignment = 1
+vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="CreditsLabel" type="Label" parent="MenuHUD/CreditsPanel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.192969
+anchor_top = 0.171528
+anchor_right = 0.807031
+anchor_bottom = 0.828472
+offset_top = 10.5
+offset_bottom = -10.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "Game made by AbsurdCoolMan
+
+Model Credits
+\"Desk lamp\" (https://skfb.ly/6R9yQ) by KaramellGlass is
+licensed under Creative Commons Attribution
+(http://creativecommons.org/licenses/by/4.0/)
+
+\"Pencil\" (https://skfb.ly/6SUAn) by HippoStance is
+licensed under Creative Commons Attribution
+(http://creativecommons.org/licenses/by/4.0/)
+
+Sound Credits
+\"Gameover\" (Sonic the Hedgehog) by Sonic Team
+
+Carefree Kevin MacLeod (incompetech.com)
+Licensed under Creative Commons: By Attribution 3.0 License
+http://creativecommons.org/licenses/by/3.0/"
+label_settings = SubResource("LabelSettings_wku10")
+horizontal_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="Back" type="Button" parent="MenuHUD/CreditsPanel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.468359
+anchor_top = 0.913889
+anchor_right = 0.531641
+anchor_bottom = 0.972222
+grow_horizontal = 2
+grow_vertical = 0
+theme = ExtResource("7_xggvu")
+text = "Back"
+metadata/_edit_use_anchors_ = true
+
+[connection signal="pressed" from="GameHUD/Choice1" to="." method="_on_choice_1_pressed"]
+[connection signal="pressed" from="GameHUD/Choice2" to="." method="_on_choice_2_pressed"]
+[connection signal="pressed" from="MenuHUD/MainPanel/StartButton" to="." method="_on_start_button_pressed"]
+[connection signal="pressed" from="MenuHUD/MainPanel/EndingsButton" to="." method="_on_endings_button_pressed"]
+[connection signal="pressed" from="MenuHUD/MainPanel/CreditsButton" to="." method="_on_credits_button_pressed"]
+[connection signal="pressed" from="MenuHUD/MainPanel/ExitButton" to="." method="_on_exit_button_pressed"]
+[connection signal="pressed" from="MenuHUD/MainPanel/SecretButton" to="." method="_on_secret_button_pressed"]
+[connection signal="pressed" from="MenuHUD/EndingsPanel/Back" to="." method="_on_endings_back_pressed"]
+[connection signal="pressed" from="MenuHUD/CreditsPanel/Back" to="." method="_on_credits_back_pressed"]
